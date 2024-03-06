@@ -1,18 +1,18 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stephane <stephane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:36:25 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/03 13:57:30 by stephane         ###   ########.fr       */
+/*   Updated: 2024/03/06 11:15:50 by svogrig          ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "pipex.h"
 
-char	**envp_to_paths(char **envp)
+char	**get_paths(char **envp)
 {
 	if (envp == NULL)
 		return (NULL);
@@ -23,36 +23,47 @@ char	**envp_to_paths(char **envp)
 		envp++;
 	}
 	return (NULL);
-	
 }
 
-char	*cmd_path(char **cmd, char **envp)
+char	*check_paths(char *cmd, char **paths)
 {
-	char	**paths;
 	char	*temp;
 	char	*cmd_path;
-	int		i;
+
+	temp = ft_strjoin("/", cmd);
+	while (*paths)
+	{
+		cmd_path = ft_strjoin(*paths, temp);
+		if (access(cmd_path, F_OK) == 0)
+			break ;
+		free(cmd_path);
+		cmd_path = NULL;
+		paths++;
+	}
+	free(temp);
+	return (cmd_path);
+}
+
+t_bool	is_valid_path(char *str)
+{
+	if (ft_strchr(str, '/') && access(str, F_OK) == 0)
+		return (TRUE);
+	return (FALSE);
+}
+
+char	*cmd_path(char *cmd, char **envp)
+{
+	char	**paths;
+	char	*cmd_path;
 
 	if (!cmd)
 		return (NULL);
-	if (access(*cmd, F_OK) == 0)
-		return (*cmd);
-	paths = envp_to_paths(envp);
+	if (is_valid_path(cmd))
+		return (ft_strdup(cmd));
+	paths = get_paths(envp);
 	if (paths == NULL)
-		return (*cmd);
-	cmd_path = NULL;
-	temp = ft_strjoin("/", *cmd);
-	i = 0;
-	while (paths[i])
-	{
-		cmd_path = ft_strjoin(paths[i], temp);
-		if (access(cmd_path, F_OK) == 0)
-			break;
-		free(cmd_path);
-		i++;
-		cmd_path = NULL;
-	}
+		return (NULL);
+	cmd_path = check_paths(cmd, paths);
 	ft_split_free(paths);
-	free(temp);
 	return (cmd_path);
 }
