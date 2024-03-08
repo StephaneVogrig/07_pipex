@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 23:00:37 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/04 21:18:43 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/07 20:54:58 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@
 # define WRITE 1
 
 char	*cmd_path(char *cmd, char **envp);
+char	**get_argv(char *str);
 
 #endif

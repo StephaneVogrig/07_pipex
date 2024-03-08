@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strtab_free.c                                      :+:      :+:    :+:   */
+/*   strlist_print_fd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/02 23:16:47 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/07 15:01:10 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/07 22:02:05 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/07 22:18:51 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	strtab_free(char **strtab)
+void	strlist_print_fd(t_list *strlist, int fd)
 {
-	char **current;
-
-	if (strtab == NULL)
-		return ;
-	current = strtab;
-	while (*current)
+	while (strlist)
 	{
-		free(*current);
-		current++;
+		ft_putstr_fd(strlist->content, fd);
+		ft_putchar_fd('\n', fd);
+		strlist = strlist->next;
 	}
-	free(strtab);
 }

@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strtab_free.c                                      :+:      :+:    :+:   */
+/*   printcoucou.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/02 23:16:47 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/07 15:01:10 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/06 15:37:01 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/07 03:12:24 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
 
-void	strtab_free(char **strtab)
+int	main(void)
 {
-	char **current;
-
-	if (strtab == NULL)
-		return ;
-	current = strtab;
-	while (*current)
-	{
-		free(*current);
-		current++;
-	}
-	free(strtab);
+	printf("coucou\n");
+	return (0);
 }

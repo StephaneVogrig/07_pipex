@@ -1,14 +1,14 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: stephane <stephane@student.42.fr>          +#+  +:+       +#+         #
+#    By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/02 02:59:52 by svogrig           #+#    #+#              #
-#    Updated: 2024/03/02 23:46:17 by stephane         ###   ########.fr        #
+#    Updated: 2024/03/07 23:10:57 by svogrig          ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 #------------------------------------------------------------------------------#
 # variables                                                                    #
@@ -70,13 +70,16 @@ SRCS 		:=	char/ft_isalnum.c \
 				str/ft_strlen.c	\
 				str/ft_strmapi.c \
 				str/ft_strncmp.c \
+				str/ft_strndup.c \
 				str/ft_strnstr.c \
 				str/ft_strrchr.c \
 				str/ft_strtrim.c \
 				str/ft_substr.c \
 				str/strcpy_offset.c \
+				str/strlist_print_fd.c \
 				str/strtab_free.c \
 				str/strtab_print.c \
+				str/strtab_print_fd.c \
 				tabsi32/tabsi32_init.c \
 				tabsi32/tabsi32_print.c \
 				ft_printf/ft_printf.c \

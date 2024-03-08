@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stephane <stephane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 19:04:55 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/02 23:21:02 by stephane         ###   ########.fr       */
+/*   Updated: 2024/03/07 23:13:15 by svogrig          ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
@@ -101,7 +101,9 @@ char		*ft_strrchr(const char *s, int c);
 char		*ft_strtrim(char const *s1, char const *set);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*strcpy_offset(char *dst, const char *src);
+void		strlist_print_fd(t_list *strlist, int fd);
 void		strtab_print(char **tabstr);
+void		strtab_print_fd(char **tabstr, int fd);
 void		strtab_free(char **strtab);
 
 /* tabsi32 -------------------------------------------------------------------*/

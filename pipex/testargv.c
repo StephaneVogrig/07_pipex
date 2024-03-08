@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strtab_free.c                                      :+:      :+:    :+:   */
+/*   testargv.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/02 23:16:47 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/07 15:01:10 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/07 03:12:44 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/07 03:17:36 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
 
-void	strtab_free(char **strtab)
+int	main(int argc, char **argv, char **envp)
 {
-	char **current;
-
-	if (strtab == NULL)
-		return ;
-	current = strtab;
-	while (*current)
+	while (*argv)
 	{
-		free(*current);
-		current++;
+		printf("\"%s\"\n", *argv);
+		argv++;
 	}
-	free(strtab);
 }

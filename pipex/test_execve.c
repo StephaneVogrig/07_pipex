@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strtab_free.c                                      :+:      :+:    :+:   */
+/*   test_execve.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/02 23:16:47 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/07 15:01:10 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/04 20:31:55 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/04 21:03:04 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <unistd.h>
+#include <stdio.h>
 
-void	strtab_free(char **strtab)
+int	main(int argc, char **argv, char **envp)
 {
-	char **current;
+	char *cmd;
 
-	if (strtab == NULL)
-		return ;
-	current = strtab;
-	while (*current)
-	{
-		free(*current);
-		current++;
-	}
-	free(strtab);
+	cmd = NULL;
+	execve(cmd, argv, envp);
+	perror("pipex: in");
 }
