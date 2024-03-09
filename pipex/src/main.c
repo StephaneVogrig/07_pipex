@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:17:29 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/06 12:30:41 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/09 03:30:04 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@ void	exec_cmd(char *cmd, char **envp)
 	char	*exe_path;
 	char	**exe_argv;
 
+	while (*cmd == ' ')
+		cmd++;
 	if (*cmd == '\0')
+		exit(0);
+	exe_argv = get_argv(cmd);
+	if (!exe_argv)
 	{
-		ft_putstr_fd("commad \'\' not found", STDERR_FD);
-		exit(127);
+		perror("pipex: exec_cmd");
+		exit(EXIT_FAILURE);
 	}
-	exe_argv = ft_split(cmd, ' ');
 	exe_path = cmd_path(exe_argv[0], envp);
 	if (!exe_path)
 	{
@@ -33,7 +37,7 @@ void	exec_cmd(char *cmd, char **envp)
 	}
 	execve(exe_path, exe_argv, envp);
 	perror("pipex");
-	ft_split_free(exe_argv);
+	strtab_free(exe_argv);
 	if (exe_path)
 		free(exe_path);
 	exit(EXIT_FAILURE);
