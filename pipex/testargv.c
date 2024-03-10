@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 03:12:44 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/07 03:17:36 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/09 12:02:50 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	while (*argv)
 	{
-		printf("\"%s\"\n", *argv);
+		printf("|%s|\n", *argv);
 		argv++;
 	}
 }

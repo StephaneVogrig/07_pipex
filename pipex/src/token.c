@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:22:47 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/09 15:54:21 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/10 03:53:29 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	size_next_token(char *str)
 {
 	int		size;
 	char	quote;
-	
+
 	size = 0;
 	while (*str && *str != ' ')
 	{
@@ -48,20 +48,25 @@ char	*str_to_token(char *str, char *token)
 				*token++ = *str++;
 			if (*str)
 				str++;
-			continue;
+			continue ;
 		}
 		*token++ = *str++;
 	}
+	*token = '\0';
 	return (str);
 }
 
-t_bool	malloc_token(char **token, int size)
+char	*malloc_next_token(char *str)
 {
-	*token = malloc(size);
-	if (!*token)
+	int		size;
+	char	*token;
+
+	size = size_next_token(str);
+	token = malloc(size + 1);
+	if (!token)
 	{
-		perror("pipex: malloc_token");
-		return (FAILURE);
+		perror("pipex: malloc_next_token");
+		return (NULL);
 	}
-	return (SUCCESS);
+	return (token);
 }

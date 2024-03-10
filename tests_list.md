@@ -1,34 +1,36 @@
+# tests pour pipex
 valgrind --track-fds=yes 
 valgrind --track-children=yes 
 
 
 executer les commanes en parallele
-pas de waitpid entre chaue commande
+pas de waitpid entre chaque commande
+
 ## test 1
 ```
 ./pipex infile "grep Makefile" "wc -w" outfile
 ```
-```
-bash : <infile "grep Makefile" | "wc -w" >outfile
+``` bash
+<infile "grep Makefile" | "wc -w" >outfile
 ```
 
 ## test 2
 ```
 ./pipex infile ls "wc -w" outfile
 ```
-```
-bash : <infile ls | wc -w >outfile
+``` bash
+<infile ls | wc -w >outfile
 ```
 ## test 3
 ```
 ./pipex noexist ls "wc -w" outfile
 ```
-```
-bash : <noexist ls | wc -w >outfile
+``` bash
+<noexist ls | wc -w >outfile
 ```
 <span style="color:green">expected :</span>
-```
-bash: noexist: No such file or directory
+``` bash
+noexist: No such file or directory
 
 cat outfile
 0
@@ -37,7 +39,7 @@ cat outfile
 ```
 ./pipex noperm ls "wc -w" outfile
 ```
-```
+``` bash
 bash : <noperm ls | wc -w >outfile
 ```
 <span style="color:green">expected :</span>
@@ -51,7 +53,7 @@ cat outfile
 ```
 ./pipex noperm ls "wc -w" noperm
 ```
-```
+``` bash
 bash : <noperm ls | wc -w >noperm
 ```
 <span style="color:green">expected :</span>
@@ -63,7 +65,7 @@ bash: noperm: Permission denied
 ```
 ./pipex infile ls "wc -w" noperm
 ```
-```
+``` bash
 bash : <infile ls | wc -w >noperm
 ```
 <span style="color:green">expected :</span>
@@ -74,7 +76,7 @@ bash: noperm: Permission denied
 ```
 ./pipex "" "" "" ""
 ```
-```
+``` bash
 bash : <"" "" | "" >""
 ```
 <span style="color:green">expected :</span>
@@ -86,14 +88,37 @@ bash: : No such file or directory
 ```
 ./pipex "   " "   " "   " "   "
 ```
-```
-bash : <"   " "   " | "   " >"   "
+``` bash
+<"   " "   " | "   " >"   "
 ```
 <span style="color:green">expected :</span>
 ```
 bash: :: No such file or directory
    : command not found
 
+```
+
+## test 9
+```
+./pipex in "./print\ coucou" cat out
+```
+``` bash
+<in ./print\ coucou | cat >out
+```
+
+## test 10
+```
+./pipex in "./\"print coucou\"" cat out
+```
+``` bash
+<in ./"print coucou" | cat >out
+```
+## test 11
+```
+./pipex in "./'print coucou'" cat out
+```
+``` bash
+<in ./'print coucou' | cat >out
 ```
 
 
@@ -131,9 +156,10 @@ unset PATH
 ```
 <infile cat | cat >outfile
 ```
-<span style="color:green">expected :</span>
-```
+``` bash
 bash: infile: No such file or directory
 bash: cat: No such file or directory
-
+```
 env -i 
+
+valgrind --trace-children=yes --track-fds=yes ./pipex in "./pipex in ls 'cat -e' /dev/stdout" './pipex /dev/stdin cat "wc" out3' out
