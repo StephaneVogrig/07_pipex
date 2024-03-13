@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strcpy_offset.c                                    :+:      :+:    :+:   */
+/*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/19 14:04:09 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/13 15:26:50 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/13 01:36:10 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/13 01:45:31 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// copy the string src in string dest
-// dest must have enough space to receive src
-// return a pointer on the the next character in dest after copy 
-char	*strcpy_offset(char *dest, const char *src)
+#include "pipex.h"
+
+void	redirection(int fd_in, int fd_out)
 {
-	while (*src)
-		*dest++ = *src++;
-	*dest = '\0';
-	return (dest);
+	dup2(fd_in, STDIN_FD);
+	dup2(fd_out, STDOUT_FD);
+	close(fd_in);
+	close(fd_out);
 }

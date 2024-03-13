@@ -6,7 +6,7 @@
 #    By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/03 19:41:13 by stephane          #+#    #+#              #
-#    Updated: 2024/03/10 04:24:24 by svogrig          ###   ########.fr        #
+#    Updated: 2024/03/13 17:21:34 by svogrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,15 +23,26 @@ DIR_SRC		:=	src
 SRC			:=	main.c \
 				cmd_path.c \
 				exec_cmd.c \
-				process_infile.c \
-				process_outfile.c \
+				error.c \
+				process.c \
+				pipe.c \
+				redirection.c \
+				str.c \
 				token.c
 
 SRC			:=	$(SRC:%=$(DIR_SRC)/%)
 
 # sources bonus ---------------------------------------------------------------#
 
-SRC_BONUS	:=	main.c 
+SRC_BONUS	:=	main.c \
+				cmd_path.c \
+				exec_cmd.c \
+				error.c \
+				process.c \
+				pipe.c \
+				redirection.c \
+				str.c \
+				token.c
 
 SRC_BONUS	:=	$(SRC_BONUS:%=$(DIR_SRC)/%)
 
@@ -70,6 +81,7 @@ CC_FLAGS	:=	-Wall -Wextra -Werror
 
 DEBUG_FLAGS	:=	-g
 VAL_FLAGS	:=	--leak-check=full --track-origins=yes --track-fds=yes
+VAL_FLAGS	:=	$(VAL_FLAGS) --show-leak-kinds=all
 
 SAN_FLAGS	:=	-fsanitize=address -g
 
@@ -79,7 +91,7 @@ MAKEFLAGS	+=	--no-print-directory
 
 # run -------------------------------------------------------------------------#
 
-RUNARGS		:=	infile cmd1 cmd2 outfile
+RUNARGS		:=	in cat ls out
 
 #------------------------------------------------------------------------------#
 # rules                                                                        #

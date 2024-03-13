@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strcpy_offset.c                                    :+:      :+:    :+:   */
+/*   printacces.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/19 14:04:09 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/13 15:26:50 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/13 04:05:18 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/13 04:11:02 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// copy the string src in string dest
-// dest must have enough space to receive src
-// return a pointer on the the next character in dest after copy 
-char	*strcpy_offset(char *dest, const char *src)
+#include <stdio.h>
+#include <unistd.h>
+
+int	main(int argc, char **argv)
 {
-	while (*src)
-		*dest++ = *src++;
-	*dest = '\0';
-	return (dest);
+	if (argc < 2)
+		return (0);
+	if (access(argv[1], F_OK) == -1)
+		perror(argv[1]);
+	if (access(argv[1], R_OK) == -1)
+		perror(argv[1]);
+	if (access(argv[1], X_OK) == -1)
+		perror(argv[1]);
+	if (access(argv[1], W_OK) == -1)
+		perror(argv[1]);
+
+	return (0);
 }

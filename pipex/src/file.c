@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strcpy_offset.c                                    :+:      :+:    :+:   */
+/*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/19 14:04:09 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/13 15:26:50 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/12 17:20:35 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/13 04:51:58 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// copy the string src in string dest
-// dest must have enough space to receive src
-// return a pointer on the the next character in dest after copy 
-char	*strcpy_offset(char *dest, const char *src)
+#include "pipex.h"
+
+int	is_directory(char *path)
 {
-	while (*src)
-		*dest++ = *src++;
-	*dest = '\0';
-	return (dest);
+	int fd;
+
+	fd = open(path, O_DIRECTORY);
+	if (fd < 0)
+		close(fd);
+	return(fd < 0);
 }

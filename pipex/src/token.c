@@ -6,13 +6,13 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:22:47 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/10 03:53:29 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/13 06:59:42 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	size_next_token(char *str)
+int	len_next_token(char *str)
 {
 	int		size;
 	char	quote;
@@ -61,7 +61,7 @@ char	*malloc_next_token(char *str)
 	int		size;
 	char	*token;
 
-	size = size_next_token(str);
+	size = len_next_token(str);
 	token = malloc(size + 1);
 	if (!token)
 	{
