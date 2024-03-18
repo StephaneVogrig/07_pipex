@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stephane <stephane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 00:41:38 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/13 16:40:43 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/17 19:43:18 by stephane         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "pipex.h"
 
@@ -20,7 +20,7 @@ int	process_infile(char *file_path, char *cmd, int *pipe_fd, char **envp)
 
 	pid = fork();
 	if (pid == -1)
-		perror("pipex: process infile");
+		perror("pipex: process infile: fork");
 	if (pid != 0)
 		return (pid);
 	fd = open(file_path, O_RDONLY);
@@ -39,7 +39,7 @@ int	process_outfile(char *file_path, char *cmd, int *pipe_fd, char **envp)
 
 	pid = fork();
 	if (pid == -1)
-		perror("pipex: process outfile");
+		perror("pipex: process outfile: fork");
 	if (pid != 0)
 		return (pid);
 	fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);

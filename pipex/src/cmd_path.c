@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stephane <stephane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:36:25 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/13 19:43:09 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/17 16:29:50 by stephane         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "pipex.h"
 
@@ -68,9 +68,9 @@ char	*path_find(char	*paths, char *buf, char *cmd, int len)
 	ft_strncpy(buf, cmd, len);
 	// str_to_token(cmd, buf);
 	// ft_memmove(buf, temp, len + 1);
-ft_putstr_fd("-----------------", STDERR_FD);
-ft_putstr_fd(buf, STDERR_FD);
-ft_putstr_fd("\n", STDERR_FD);
+// ft_putstr_fd("-----------------", STDERR_FD);
+// ft_putstr_fd(buf, STDERR_FD);
+// ft_putstr_fd("\n", STDERR_FD);
 	cmd_not_found(buf, TO_BE_FREE);
 	return (NULL);
 }
@@ -94,8 +94,8 @@ char	*cmd_path(char *cmd, char **envp)
 	char	*paths;
 	int		len_cmd;
 	int		len_paths;
-ft_putstr_fd(cmd, STDERR_FD);
-ft_putstr_fd("\n", STDERR_FD);
+// ft_putstr_fd(cmd, STDERR_FD);
+// ft_putstr_fd("\n", STDERR_FD);
 
 	paths = find_paths(envp);
 	if (!paths || *cmd == '\0')
