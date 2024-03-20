@@ -6,11 +6,11 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:52:14 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/13 19:46:45 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/20 02:52:56 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "str.h"
 
 void	ft_strncpy(char *dest, char *src, int n)
 {

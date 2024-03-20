@@ -6,11 +6,11 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:22:47 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/13 06:59:42 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/20 02:54:36 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "token.h"
 
 int	len_next_token(char *str)
 {

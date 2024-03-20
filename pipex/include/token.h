@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 02:10:52 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/20 04:46:33 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/20 02:38:28 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/20 02:54:10 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef TOKEN_H
+# define TOKEN_H
 
-void	exit_on_open_error(char *file_path, int	pipe_fd[])
-{
-	char	*error_msg;
+# include <stdlib.h>
+# include <stdio.h>
 
-	error_msg = pipex_strjoin("pipex: ", file_path);
-	if (error_msg)
-	{
-		perror(error_msg);
-		free(error_msg);
-	}
-	close_pipe(pipe_fd);
-	exit(EXIT_FAILURE);
-}
+int		len_next_token(char *str);
+char	*str_to_token(char *str, char *token);
+char	*malloc_next_token(char *str);
+
+#endif

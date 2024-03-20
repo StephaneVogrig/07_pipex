@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   cmd_path.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/02 23:00:37 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/20 04:57:29 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/20 04:48:37 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/20 04:58:09 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef CMD_PATH_H
+# define CMD_PATH_H
 
-# include <unistd.h>
-# include <fcntl.h>
-# include <sys/wait.h>
-# include <sys/types.h>
-# include <errno.h>
 # include "libft.h"
-# include "pipex_const.h"
-# include "cmd_path.h"
-# include "cmd_to_argv.h"
+# include "str.h"
 # include "redirection.h"
 # include "str.h"
 # include "token.h"
 
-# define ERROR_USE "usage: ./pipex <file1> <cmd1> <cmd2> <file2>\n"
-
-
-void	exit_on_open_error(char *file_path, int	pipe_fd[]);
+char	*cmd_path(char *cmd, char **envp);
 
 #endif

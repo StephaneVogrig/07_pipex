@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_outfile.c                                  :+:      :+:    :+:   */
+/*   pipex_const.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 00:42:11 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/13 02:57:00 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/20 03:38:25 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/20 03:39:21 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef PIPEX_CONST_H
+# define PIPEX_CONST_H
 
-void	close_pipe(int	*pipe_fd)
-{
-	close(pipe_fd[READ]);
-	close(pipe_fd[WRITE]);
-}
+enum e_pipe {READ, WRITE};
+enum e_bool {NO, YES};
+enum e_free {NOT_BE_FREE, TO_BE_FREE};
+
+#endif

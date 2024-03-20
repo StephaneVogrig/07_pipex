@@ -1,25 +1,30 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stephane <stephane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:36:25 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/17 16:29:50 by stephane         ###   ########.fr       */
+/*   Updated: 2024/03/20 07:45:21 by svogrig          ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
-#include "pipex.h"
+#include "cmd_path.h"
 
-int	is_directory(char *path)
+void	cmd_not_found(char *cmd, t_bool to_be_free)
 {
-	int fd;
+	char	*error_msg;
 
-	fd = open(path, O_DIRECTORY);
-	if (fd >= 0)
-		close(fd);
-	return(fd >= 0);
+	error_msg = pipex_strjoin(cmd, ": command not found\n");
+	if (error_msg)
+	{
+		ft_putstr_fd(error_msg, STDERR_FD);
+		free(error_msg);
+	}
+	if (to_be_free)
+		free(cmd);
+	exit(127);
 }
 
 t_bool	is_valid_path(char *path)
@@ -46,31 +51,19 @@ t_bool	is_valid_path(char *path)
 char	*path_find(char	*paths, char *buf, char *cmd, int len)
 {
 	char	*temp;
-// ft_putstr_fd(cmd, STDERR_FD);
-// ft_putstr_fd("\n-----------------\n", STDERR_FD);
 	while (*paths)
 	{
-// ft_putstr_fd(paths, STDERR_FD);
-// ft_putstr_fd("...\n", STDERR_FD);
 		temp = buf;
 		while (*paths && *paths != ':')
 			*temp++ = *paths++;
 		*temp++ = '/';
-		// str_to_token(cmd, temp);
 		ft_strncpy(temp, cmd, len);
-// ft_putstr_fd(buf, STDERR_FD);
-// ft_putstr_fd("\n", STDERR_FD);
 		if (access(buf, F_OK) == 0 && is_valid_path(buf))
 			return (pipex_strndup(buf, temp + len - buf, TO_BE_FREE));
 		if (*paths == ':')
 			paths++;
 	}
 	ft_strncpy(buf, cmd, len);
-	// str_to_token(cmd, buf);
-	// ft_memmove(buf, temp, len + 1);
-// ft_putstr_fd("-----------------", STDERR_FD);
-// ft_putstr_fd(buf, STDERR_FD);
-// ft_putstr_fd("\n", STDERR_FD);
 	cmd_not_found(buf, TO_BE_FREE);
 	return (NULL);
 }
@@ -94,8 +87,6 @@ char	*cmd_path(char *cmd, char **envp)
 	char	*paths;
 	int		len_cmd;
 	int		len_paths;
-// ft_putstr_fd(cmd, STDERR_FD);
-// ft_putstr_fd("\n", STDERR_FD);
 
 	paths = find_paths(envp);
 	if (!paths || *cmd == '\0')
@@ -104,9 +95,6 @@ char	*cmd_path(char *cmd, char **envp)
 	len_cmd = len_next_token(cmd);
 	cmd_path = str_malloc(len_paths + len_cmd + 2, "pipex: cmd_path");
 	str_to_token(cmd, cmd_path);
-// ft_putstr_fd(cmd_path, STDERR_FD);
-// ft_putstr_fd("\n", STDERR_FD);
-	// ft_strncpy(cmd_path, cmd, len_cmd);
 	if (ft_strchr(cmd_path, '/') && is_valid_path(cmd_path))
 		return (pipex_strndup(cmd_path, len_cmd, TO_BE_FREE));
 	cmd_path = path_find(paths, cmd_path, cmd, len_cmd);

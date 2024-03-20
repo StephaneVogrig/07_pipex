@@ -1,16 +1,16 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   cmd_to_argv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stephane <stephane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 17:15:04 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/17 17:00:09 by stephane         ###   ########.fr       */
+/*   Created: 2024/03/20 03:52:08 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/20 07:42:25 by svogrig          ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
-#include "pipex.h"
+# include "cmd_to_argv.h"
 
 char	**tokenlist_to_argv(t_list *strlist)
 {
@@ -80,7 +80,7 @@ t_bool	str_to_tokenlist(char *str, t_list **tokenlist)
 	return (FAILURE);
 }
 
-char	**get_argv(char *str)
+char	**cmd_to_argv(char *str)
 {
 	t_list	*tokenlist;
 
@@ -88,23 +88,4 @@ char	**get_argv(char *str)
 	if (str_to_tokenlist(str, &tokenlist) == SUCCESS)
 		return (tokenlist_to_argv(tokenlist));
 	return (NULL);
-}
-
-void	exec_cmd(char *cmd, char **envp)
-{
-	char	*path;
-	char	**argv;
-ft_putstr_fd(cmd,STDERR_FD);
-ft_putstr_fd("\n",STDERR_FD);
-	while (*cmd == ' ')
-		cmd++;
-	path = cmd_path(cmd, envp);
-	argv = get_argv(cmd);
-	if (!argv)
-		exit(EXIT_FAILURE);
-	execve(path, argv, envp);
-	perror("pipex");
-	strtab_free(argv);
-	free(path);
-	exit(EXIT_FAILURE);
 }

@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   redirection.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/02 23:00:37 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/20 04:57:29 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/20 03:33:33 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/20 03:44:01 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef REDIRECTION_H
+# define REDIRECTION_H
 
-# include <unistd.h>
 # include <fcntl.h>
-# include <sys/wait.h>
-# include <sys/types.h>
-# include <errno.h>
 # include "libft.h"
 # include "pipex_const.h"
-# include "cmd_path.h"
-# include "cmd_to_argv.h"
-# include "redirection.h"
-# include "str.h"
-# include "token.h"
 
-# define ERROR_USE "usage: ./pipex <file1> <cmd1> <cmd2> <file2>\n"
-
-
-void	exit_on_open_error(char *file_path, int	pipe_fd[]);
+void	redirection(int fd_in, int fd_out);
+void	close_pipe(int	*pipe_fd);
+int		is_directory(char *path);
 
 #endif

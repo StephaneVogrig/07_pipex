@@ -1,14 +1,14 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: stephane <stephane@student.42.fr>          +#+  +:+       +#+         #
+#    By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/03 19:41:13 by stephane          #+#    #+#              #
-#    Updated: 2024/03/17 20:58:28 by stephane         ###   ########.fr        #
+#    Updated: 2024/03/20 05:22:38 by svogrig          ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 NAME		:=	pipex
 NAME_BONUS	:=	$(NAME)_bonus
@@ -22,10 +22,8 @@ NAME_SANB	:=	$(NAME)_bonussanitize
 DIR_SRC		:=	src
 SRC			:=	main.c \
 				cmd_path.c \
-				exec_cmd.c \
+				cmd_to_argv.c \
 				error.c \
-				process.c \
-				pipe.c \
 				redirection.c \
 				str.c \
 				token.c
@@ -35,13 +33,11 @@ SRC			:=	$(SRC:%=$(DIR_SRC)/%)
 # sources bonus ---------------------------------------------------------------#
 
 SRC_BONUS	:=	bonus/main_bonus.c \
+				bonus/heredoc_bonus.c \
+				bonus/pipex_bonus.c \
 				bonus/process_bonus.c \
-				bonus/pipex_malloc_bonus.c \
 				cmd_path.c \
-				exec_cmd.c \
-				error.c \
-				process.c \
-				pipe.c \
+				cmd_to_argv.c \
 				redirection.c \
 				str.c \
 				token.c

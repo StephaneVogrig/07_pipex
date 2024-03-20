@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   str.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 02:10:52 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/20 04:46:33 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/20 02:50:36 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/20 02:59:28 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef STR_H
+# define STR_H
 
-void	exit_on_open_error(char *file_path, int	pipe_fd[])
-{
-	char	*error_msg;
+# include <stdio.h>
+# include "libft.h"
 
-	error_msg = pipex_strjoin("pipex: ", file_path);
-	if (error_msg)
-	{
-		perror(error_msg);
-		free(error_msg);
-	}
-	close_pipe(pipe_fd);
-	exit(EXIT_FAILURE);
-}
+void	ft_strncpy(char *dest, char *src, int n);
+char	*str_malloc(int size, const char *error_msg);
+char	*pipex_strndup(char *str, int n, t_bool to_be_free);
+char	*pipex_strjoin(char *str1, char *str2);
+
+#endif

@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file.c                                             :+:      :+:    :+:   */
+/*   cmd_to_argv.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 17:20:35 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/13 04:51:58 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/20 03:55:14 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/20 03:58:38 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef CMD_TO_ARGV_H
+# define CMD_TO_ARGV_H
 
-int	is_directory(char *path)
-{
-	int fd;
+# include <stdio.h>
+# include "libft.h"
+# include "token.h"
 
-	fd = open(path, O_DIRECTORY);
-	if (fd < 0)
-		close(fd);
-	return(fd < 0);
-}
+char	**cmd_to_argv(char *str);
+
+#endif

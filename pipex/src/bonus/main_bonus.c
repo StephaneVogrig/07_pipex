@@ -1,16 +1,15 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stephane <stephane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:35:58 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/17 21:03:57 by stephane         ###   ########.fr       */
+/*   Updated: 2024/03/20 07:48:19 by svogrig          ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
-#include "pipex.h"
 #include "pipex_bonus.h"
 
 int	wait_process(pid_t *pids, int n)
@@ -25,7 +24,9 @@ int	wait_process(pid_t *pids, int n)
 	while (i < n)
 	{
 		if (pids[i] > 0)
+		{
 			waitpid(pids[i], &wstatus, 0);
+		}
 		i++;
 	}
 	if (WIFEXITED(wstatus))
@@ -33,28 +34,45 @@ int	wait_process(pid_t *pids, int n)
 	return (exit_code);
 }
 
-int	main(int argc, char **argv, char **envp)
+int	pipex(int heredoc_needed, int nb_cmd, char **cmd, char **envp)
 {
-	int		pipe_fd[2];
+	int		pipe_[2];
 	pid_t	*pids;
 	int		i;
+	int		exit_code;
+
+	pids = pipex_malloc(sizeof(int) * nb_cmd, "pipex: main: malloc");
+	if(pipe(pipe_))
+		exit_pipex("pipex: process_outfile: fork", pids, NULL, NULL);
+	i = 0;
+	if (heredoc_needed)
+		pids[0] = process_heredoc(cmd++, pipe_, envp, pids);
+	else
+		pids[0] = process_infile(cmd++, pipe_, envp, pids);
+	close(pipe_[WRITE]);
+	while (i < (nb_cmd - 2) && pids[i] > -1)
+		pids[++i] = process_pipes(cmd++, &pipe_[READ], envp, pids);
+	if (i == (nb_cmd - 2) && pids[i - 2] > -1)
+		pids[++i] = process_outfile(cmd, &pipe_[READ], envp, pids);
+	exit_code = wait_process(pids, nb_cmd);
+	free(pids);
+	return (exit_code);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	int		nb_cmd;
+	int		heredoc_needed;
 
 	if (argc < 5)
-		return (pipex_error(ERROR_USE_BONUS));
-	pids = pipex_malloc(sizeof(int) * (argc - 3), "pipex: main: malloc");
-	if (pipe(pipe_fd) == -1)
 	{
-		pipex_perror("pipex: main: pipe");
-		free(pids);
+		ft_putstr_fd(ERROR_USE_BONUS, STDERR_FD);
 		return (EXIT_FAILURE);
 	}
-	pids[0] = process_infile(argv[1], argv[2], pipe_fd, envp);
-	i = 0;
-	while (++i < argc - 4)
-		pids[i] = process_inter(argv[i + 2], pipe_fd, envp);
-	pids[i] = process_outfile(argv[argc - 1], argv[argc - 2], pipe_fd, envp);
-	close_pipe(pipe_fd);
-	free(pids);
-	return (wait_process(pids, argc - 3));
+	argv++;
+	heredoc_needed = (argc > 5) && (ft_strcmp(*argv, "here_doc") == 0);
+	nb_cmd = argc - (3 + heredoc_needed);
+	argv += 1 + heredoc_needed;
+	return (pipex(heredoc_needed, nb_cmd, argv, envp));
 }
 
