@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 00:05:06 by svogrig           #+#    #+#             */
-/*   Updated: 2024/01/23 01:00:20 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/21 07:52:21 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,26 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <limits.h>
+# include <stdlib.h>
 # include "ft_constant.h"
 # include "vs_type.h"
 # include "float.h"
 
-# define BUFFER_SIZE 1024
+# define BUFFER_SIZE 2048
 # define LEN_MAXLONGLONG 20
 # define MAX_DIGIT_HEXA 16
 # define LEN_NIL 5
 
-typedef struct buffer{
-	char	data[BUFFER_SIZE];
-	t_ui32	offset;
-	ssize_t	writed;
+typedef struct s_buflst{
+	char			data[BUFFER_SIZE];
+	struct s_buflst	*next;
+}	t_buflst;
+
+typedef struct s_buffer{
+	char		data[BUFFER_SIZE];
+	t_ui32		offset;
+	ssize_t		writed;
+	t_buflst	*save;
 }	t_buffer;
 
 typedef struct s_spec {
@@ -56,6 +63,7 @@ typedef struct s_nbrstr {
 	char	is_zero;
 }	t_nbrstr;
 
+int			fd_printf(int fd, const char *format, ...);
 int			ft_printf(const char *format, ...);
 
 /* parsing -------------------------------------------------------------------*/
@@ -79,6 +87,10 @@ void		buffer_add_char(t_buffer *buffer, char c, int n);
 void		buffer_add_str(t_buffer *buffer, char *str, size_t len);
 ssize_t		buffer_print(t_buffer buffer);
 int			buffer_add_spec(t_buffer *buffer, t_spec *spec);
+
+/* buffer save ---------------------------------------------------------------*/
+void		buffer_save(t_buffer *buffer);
+void		buffer_save_add(t_buflst **list, t_buflst *new);
 
 /* format --------------------------------------------------------------------*/
 int			format_c(char c, t_spec *spec, t_buffer *buffer);

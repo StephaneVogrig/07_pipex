@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:36:25 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/20 07:45:21 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/22 02:44:42 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_bool	is_valid_path(char *path)
 char	*path_find(char	*paths, char *buf, char *cmd, int len)
 {
 	char	*temp;
+
 	while (*paths)
 	{
 		temp = buf;

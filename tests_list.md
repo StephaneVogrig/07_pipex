@@ -11,7 +11,7 @@ pas de waitpid entre chaque commande
 ./pipex infile "grep Makefile" "wc -w" outfile
 ```
 ``` bash
-<infile "grep Makefile" | "wc -w" >outfile
+<infile grep Makefile | wc -w >outfile
 ```
 
 ## test 2

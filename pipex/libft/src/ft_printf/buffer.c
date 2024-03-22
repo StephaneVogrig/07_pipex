@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 17:33:14 by svogrig           #+#    #+#             */
-/*   Updated: 2024/01/12 20:12:00 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/22 03:08:13 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 
 ssize_t	buffer_print(t_buffer buffer)
 {
+	t_buflst	*tmp;
+
+	while (buffer.save)
+	{
+		tmp = buffer.save;
+		buffer.writed += write(1, tmp->data, BUFFER_SIZE);
+		buffer.save = tmp->next;
+		free(tmp);
+	}
 	return (write(1, buffer.data, buffer.offset) + buffer.writed);
 }
 
@@ -25,10 +34,7 @@ void	buffer_add_char(t_buffer *buffer, char c, int n)
 	{
 		buffer->data[buffer->offset++] = c;
 		if (buffer->offset == BUFFER_SIZE)
-		{
-			buffer->writed += write(1, buffer->data, BUFFER_SIZE);
-			buffer->offset = 0;
-		}
+			buffer_save(buffer);
 	}
 }
 
@@ -40,10 +46,7 @@ void	buffer_add_str(t_buffer *buffer, char *str, size_t n)
 	{
 		buffer->data[buffer->offset++] = *str++;
 		if (buffer->offset == BUFFER_SIZE)
-		{
-			buffer->writed += write(1, buffer->data, BUFFER_SIZE);
-			buffer->offset = 0;
-		}
+			buffer_save(buffer);
 	}
 }
 

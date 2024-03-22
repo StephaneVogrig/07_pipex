@@ -6,63 +6,52 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:09:17 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/20 07:56:05 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/22 02:58:38 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-t_bool	gen_path(char *path)
+void	heredoc_write(t_list *hd_lst, int fd)
 {
-	int	fd; 
-
-	fd = open("/dev/urandom", O_RDONLY);
-	if (fd == -1)
+	while (hd_lst)
 	{
-		perror("pipex: gen_path: open");
-		return (ERROR);
+		ft_putstr_fd(hd_lst->content, fd);
+		hd_lst = hd_lst->next;
 	}
-	if (read(fd, path, 17) < 0)
-	{
-		close(fd);
-		perror("pipex: gen_path: read");
-		return (ERROR);
-	}
-	close(fd);
-	return (SUCCESS);
 }
 
-t_bool	temp_path(char *path)
+void	*calloc_error(char *msg, char *limiter)
 {
-	ft_memcpy(path, "/temp/pipex_", 12);
-	path[29] = '\0';
-	if (!gen_path(path + 12))
-		return (ERROR);
-	while (access(path, F_OK) == 0)
-		gen_path(path);
-	return (SUCCESS);
+	perror(msg);
+	free(limiter);
+	return (NULL);
 }
 
-int	get_heredoc(char *limiter, char *path)
+t_list	*get_heredoc(char *limiter)
 {
 	char	*line;
-	int		fd;
+	t_list	*hd_list;
+	t_list	*new_node;
 
-	if (!temp_path(path))
-		return (-1);
-ft_putstr_fd(path, 2);
-	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
-		return (-1);
-	unlink(path);
-	line = get_next_line(fd);
+	limiter = pipex_strjoin(limiter, "\n");
+	if (!limiter)
+		return (NULL);
+	line = ft_calloc(1, 1);
+	if (!line)
+		return (calloc_error("pipex: get_herdoc: ft_calloc", limiter));
+	hd_list = NULL;
 	while (line && ft_strcmp(line, limiter) != 0)
 	{
-		ft_putstr_fd(line, fd);
-		free(line);
-		line = get_next_line(fd);
+		new_node = ft_lstnew(line);
+		if (!new_node)
+		{
+			free(line);
+			ft_lstclear(&hd_list, *free);
+			return (NULL);
+		}
+		ft_lstadd_back(&hd_list, new_node);
+		line = get_next_line(STDIN_FD);
 	}
-	if (line)
-		free(line);
-	return (fd);
+	return (hd_list);
 }

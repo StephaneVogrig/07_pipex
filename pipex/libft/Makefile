@@ -6,7 +6,7 @@
 #    By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/02 02:59:52 by svogrig           #+#    #+#              #
-#    Updated: 2024/03/07 23:10:57 by svogrig          ###   ########.fr        #
+#    Updated: 2024/03/21 06:32:38 by svogrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,8 +82,10 @@ SRCS 		:=	char/ft_isalnum.c \
 				str/strtab_print_fd.c \
 				tabsi32/tabsi32_init.c \
 				tabsi32/tabsi32_print.c \
+				ft_printf/fd_printf.c \
 				ft_printf/ft_printf.c \
 				ft_printf/buffer.c \
+				ft_printf/buffer_save.c \
 				ft_printf/format_c.c \
 				ft_printf/format_f.c \
 				ft_printf/format_i.c \

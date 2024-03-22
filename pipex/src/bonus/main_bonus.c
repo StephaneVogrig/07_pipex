@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:35:58 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/20 07:48:19 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/22 02:45:39 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	wait_process(pid_t *pids, int n)
 	int	wstatus;
 	int	exit_code;
 	int	i;
-	
+
 	wstatus = 0;
-	exit_code = EXIT_FAILURE;
+	exit_code = EXIT_SUCCESS;
 	i = 0;
-	while (i < n)
+	while (i <= n)
 	{
 		if (pids[i] > 0)
 		{
@@ -42,7 +42,7 @@ int	pipex(int heredoc_needed, int nb_cmd, char **cmd, char **envp)
 	int		exit_code;
 
 	pids = pipex_malloc(sizeof(int) * nb_cmd, "pipex: main: malloc");
-	if(pipe(pipe_))
+	if (pipe(pipe_))
 		exit_pipex("pipex: process_outfile: fork", pids, NULL, NULL);
 	i = 0;
 	if (heredoc_needed)
@@ -52,9 +52,9 @@ int	pipex(int heredoc_needed, int nb_cmd, char **cmd, char **envp)
 	close(pipe_[WRITE]);
 	while (i < (nb_cmd - 2) && pids[i] > -1)
 		pids[++i] = process_pipes(cmd++, &pipe_[READ], envp, pids);
-	if (i == (nb_cmd - 2) && pids[i - 2] > -1)
+	if (i == (nb_cmd - 2) && pids[i] > -1)
 		pids[++i] = process_outfile(cmd, &pipe_[READ], envp, pids);
-	exit_code = wait_process(pids, nb_cmd);
+	exit_code = wait_process(pids, i);
 	free(pids);
 	return (exit_code);
 }
@@ -75,4 +75,3 @@ int	main(int argc, char **argv, char **envp)
 	argv += 1 + heredoc_needed;
 	return (pipex(heredoc_needed, nb_cmd, argv, envp));
 }
-

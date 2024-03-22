@@ -1,37 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection.c                                      :+:      :+:    :+:   */
+/*   fdprintf_test.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 01:36:10 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/22 02:46:26 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/21 06:27:51 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/21 06:49:11 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "redirection.h"
+#include "libft/include/libft.h"
 
-void	redirection(int fd_in, int fd_out)
+int	main(int argc, char **argv)
 {
-	dup2(fd_in, STDIN_FD);
-	dup2(fd_out, STDOUT_FD);
-	close(fd_in);
-	close(fd_out);
-}
-
-void	close_pipe(int	*pipe_fd)
-{
-	close(pipe_fd[READ]);
-	close(pipe_fd[WRITE]);
-}
-
-int	is_directory(char *path)
-{
-	int	fd;
-
-	fd = open(path, O_DIRECTORY);
-	if (fd >= 0)
-		close(fd);
-	return (fd >= 0);
+	if (argc > 1)
+		fd_printf(1, "%s\n", argv[1]);
+	return (0);
 }

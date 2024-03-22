@@ -6,13 +6,12 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 20:21:26 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/20 05:30:26 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/22 03:01:42 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_BONUS_H
 # define PIPEX_BONUS_H
-
 
 # include <unistd.h>
 # include <fcntl.h>
@@ -36,13 +35,14 @@ usage: \n\
 /* pipex bonus -------------------------------------------------------------*/
 
 void	*pipex_malloc(int size, char *error_msg);
-void	exec_cmd(char *cmd, char **envp, int *pids);
+void	exec_cmd(char *cmd, char **envp);
 void	exit_pipex(char *msg, int *pids, int *fd, int *pipe);
-void	exit_pipex_open_error(char *file_path, int *pids, int *fd, int *pipe);
+void	exit_pipex_open_error(char *file_path, int *fd, int *pipe);
 
 /* heredoc bonus -------------------------------------------------------------*/
 
-int		get_heredoc(char *limiter, char *path);
+void	heredoc_write(t_list *hd_lst, int fd);
+t_list	*get_heredoc(char *limiter);
 
 /* process bonus -------------------------------------------------------------*/
 

@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 23:00:37 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/20 04:57:29 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/22 03:04:39 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 
 # define ERROR_USE "usage: ./pipex <file1> <cmd1> <cmd2> <file2>\n"
 
-
-void	exit_on_open_error(char *file_path, int	pipe_fd[]);
+void	exit_on_open_error(char *file_path, int pipe_fd[]);
 
 #endif
