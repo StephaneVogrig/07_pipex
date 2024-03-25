@@ -6,7 +6,7 @@
 #    By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 19:18:29 by svogrig           #+#    #+#              #
-#    Updated: 2024/03/22 02:34:43 by svogrig          ###   ########.fr        #
+#    Updated: 2024/03/25 21:25:50 by svogrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -213,33 +213,15 @@ printresult "$EXITCODE_PIPEX" "$EXITCODE_BASH"
 
 # -----------------------------------------------------------------------------------------------
 printf "${PURPLE}\nTest 13${RESET}"
-printf "${WHITE} < infile grep Hello | awk '{count++} END {print count}' | cat > outfile          ${RESET}"
-./pipex infile "grep Hello" "awk '{count++} END {print count}'" cat out_pipex
+printf "${WHITE} < infile ls -l infile | wc -cl | cat > outfile                                          ${RESET}"
+./pipex infile "ls -l infile" "wc -cl" cat out_pipex
 EXITCODE_PIPEX=$?
-< infile grep Hello | awk '{count++} END {print count}' | cat > out_bash 
+< infile ls -l infile | wc -cl | cat > out_bash 
 EXITCODE_BASH=$?
 printresult "$EXITCODE_PIPEX" "$EXITCODE_BASH"
 
 # -----------------------------------------------------------------------------------------------
 printf "${PURPLE}\nTest 14${RESET}"
-printf "${WHITE} < infile grep Hello | awk \"{count++} END {print count}\" > outfile                ${RESET}"
-./pipex infile "grep Hello" "awk \"{count++} END {print count}\"" out_pipex
-EXITCODE_PIPEX=$?
-< infile grep Hello | awk '{count++} END {print count}' > out_bash 
-EXITCODE_BASH=$?
-printresult "$EXITCODE_PIPEX" "$EXITCODE_BASH"
-
-# -----------------------------------------------------------------------------------------------
-printf "${PURPLE}\nTest 15${RESET}"
-printf "${WHITE} < infile grep Hello | awk \"{count++} END {print count}\" > outfile                ${RESET}"
-./pipex infile "grep Hello" "awk \"{count++} END {print count}\"" out_pipex
-EXITCODE_PIPEX=$?
-< infile grep Hello | awk '{count++} END {print count}' > out_bash 
-EXITCODE_BASH=$?
-printresult "$EXITCODE_PIPEX" "$EXITCODE_BASH"
-
-# -----------------------------------------------------------------------------------------------
-printf "${PURPLE}\nTest 16${RESET}"
 printf "${WHITE} < /dev/urandom cat | head -n1 > outfile                                          ${RESET}"
 ./pipex /dev/urandom cat "head -n1" out_pipex
 EXITCODE_PIPEX=$?
@@ -250,7 +232,7 @@ EXITCODE_BASH=$?
 printresult "$EXITCODE_PIPEX" "$EXITCODE_BASH"
 
 # -----------------------------------------------------------------------------------------------
-printf "${PURPLE}\nTest 17${RESET}"
+printf "${PURPLE}\nTest 15${RESET}"
 printf "${WHITE} < \"\" \"\" | \"\" | \"\" | \"\" > \"\"                                                      ${RESET}"
 2> outerr_pipex ./pipex "" "" "" "" "" ""
 EXITCODE_PIPEX=$?
@@ -259,7 +241,7 @@ EXITCODE_BASH=$?
 printresult "$EXITCODE_PIPEX" "$EXITCODE_BASH"
 
 # -----------------------------------------------------------------------------------------------
-printf "${PURPLE}\nTest 18${RESET}"
+printf "${PURPLE}\nTest 16${RESET}"
 printf "${WHITE} < \"\" cat | cat | cat | cat > \"\"                                                  ${RESET}"
 2> outerr_pipex ./pipex "" cat cat cat cat ""
 EXITCODE_PIPEX=$?
@@ -268,7 +250,7 @@ EXITCODE_BASH=$?
 printresult "$EXITCODE_PIPEX" "$EXITCODE_BASH"
 
 # -----------------------------------------------------------------------------------------------
-printf "${PURPLE}\nTest 19${RESET}"
+printf "${PURPLE}\nTest 17${RESET}"
 printf "${WHITE} < infile \"\" | \"\" | \"\" | \"\" > outfile                                             ${RESET}"
 2> outerr_pipex ./pipex infile "" "" "" "" out_pipex
 EXITCODE_PIPEX=$?
@@ -277,7 +259,7 @@ EXITCODE_BASH=$?
 printresult "$EXITCODE_PIPEX" "$EXITCODE_BASH"
 
 # -----------------------------------------------------------------------------------------------
-printf "${PURPLE}\nTest 20${RESET}"
+printf "${PURPLE}\nTest 18${RESET}"
 printf "${WHITE} < ./libft cat | cat | cat | cat > ./libft                                        ${RESET}"
 2> outerr_pipex ./pipex ./libft cat cat cat cat ./libft
 EXITCODE_PIPEX=$?
@@ -286,7 +268,7 @@ EXITCODE_BASH=$?
 printresult "$EXITCODE_PIPEX" "$EXITCODE_BASH"
 
 # -----------------------------------------------------------------------------------------------
-printf "${PURPLE}\nTest 21${RESET}"
+printf "${PURPLE}\nTest 19${RESET}"
 printf "${WHITE} < infile noexist | noexist | noexist > outfile                                   ${RESET}"
 2> outerr_pipex ./pipex infile noexist noexist noexist out_pipex
 EXITCODE_PIPEX=$?
