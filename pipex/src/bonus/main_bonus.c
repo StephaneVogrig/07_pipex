@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 19:35:58 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/22 02:45:39 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/26 23:26:29 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ int	wait_process(pid_t *pids, int n)
 	while (i <= n)
 	{
 		if (pids[i] > 0)
-		{
 			waitpid(pids[i], &wstatus, 0);
-		}
 		i++;
 	}
 	if (WIFEXITED(wstatus))
@@ -43,17 +41,20 @@ int	pipex(int heredoc_needed, int nb_cmd, char **cmd, char **envp)
 
 	pids = pipex_malloc(sizeof(int) * nb_cmd, "pipex: main: malloc");
 	if (pipe(pipe_))
-		exit_pipex("pipex: process_outfile: fork", pids, NULL, NULL);
+		exit_pipex("pipex: process_outfile: fork", pids, NULL);
 	i = 0;
 	if (heredoc_needed)
-		pids[0] = process_heredoc(cmd++, pipe_, envp, pids);
+		pids[0] = process_infile_hd(cmd++, pipe_, envp, pids);
 	else
 		pids[0] = process_infile(cmd++, pipe_, envp, pids);
 	close(pipe_[WRITE]);
 	while (i < (nb_cmd - 2) && pids[i] > -1)
 		pids[++i] = process_pipes(cmd++, &pipe_[READ], envp, pids);
-	if (i == (nb_cmd - 2) && pids[i] > -1)
+	if (pids[i] > -1 && heredoc_needed)
+		pids[++i] = process_outfile_hd(cmd, &pipe_[READ], envp, pids);
+	else if (pids[i] > -1)
 		pids[++i] = process_outfile(cmd, &pipe_[READ], envp, pids);
+	close(pipe_[READ]);
 	exit_code = wait_process(pids, i);
 	free(pids);
 	return (exit_code);

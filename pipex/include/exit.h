@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   exit.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 02:10:52 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/22 02:47:02 by svogrig          ###   ########.fr       */
+/*   Created: 2024/03/26 20:00:10 by svogrig           #+#    #+#             */
+/*   Updated: 2024/03/26 22:17:35 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef EXIT_H
+# define EXIT_H
 
-void	exit_on_open_error(char *file_path, int pipe_fd[])
-{
-	char	*error_msg;
+# include <stdlib.h>
+# include <string.h>
+# include <errno.h>
+# include "libft.h"
+# include "pipex_const.h"
 
-	error_msg = pipex_strjoin("pipex: ", file_path);
-	if (error_msg)
-	{
-		perror(error_msg);
-		free(error_msg);
-	}
-	close_pipe(pipe_fd);
-	exit(EXIT_FAILURE);
-}
+void	exit_on_cmd_not_found(char *cmd, t_bool to_be_free);
+void	exit_on_open_error(char *file_path, int fd);
+void	exit_perror(char *msg);
+
+#endif

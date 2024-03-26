@@ -6,7 +6,7 @@
 #    By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 19:18:29 by svogrig           #+#    #+#              #
-#    Updated: 2024/03/25 21:25:50 by svogrig          ###   ########.fr        #
+#    Updated: 2024/03/25 23:19:18 by svogrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -213,7 +213,7 @@ printresult "$EXITCODE_PIPEX" "$EXITCODE_BASH"
 
 # -----------------------------------------------------------------------------------------------
 printf "${PURPLE}\nTest 13${RESET}"
-printf "${WHITE} < infile ls -l infile | wc -cl | cat > outfile                                          ${RESET}"
+printf "${WHITE} < infile ls -l infile | wc -cl | cat > outfile                                   ${RESET}"
 ./pipex infile "ls -l infile" "wc -cl" cat out_pipex
 EXITCODE_PIPEX=$?
 < infile ls -l infile | wc -cl | cat > out_bash 

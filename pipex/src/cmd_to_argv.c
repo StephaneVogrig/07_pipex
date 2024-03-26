@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 03:52:08 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/22 02:43:32 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/26 17:22:49 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,29 @@ char	**cmd_to_argv(char *str)
 	t_list	*tokenlist;
 
 	tokenlist = NULL;
-	if (str_to_tokenlist(str, &tokenlist) == SUCCESS)
-		return (tokenlist_to_argv(tokenlist));
-	return (NULL);
+	if (str_to_tokenlist(str, &tokenlist) == FAILURE)
+		return (NULL);
+	return (tokenlist_to_argv(tokenlist));
+}
+
+void	exec_cmd(int fd_in, int fd_out, char *cmd, char **envp)
+{
+	char	*path;
+	char	**argv;
+
+	dup2(fd_in, STDIN_FD);
+	close(fd_in);
+	dup2(fd_out, STDOUT_FD);
+	close(fd_out);
+	while (*cmd == ' ')
+		cmd++;
+	path = cmd_path(cmd, envp);
+	argv = cmd_to_argv(cmd);
+	if (!argv)
+		exit(EXIT_FAILURE);
+	execve(path, argv, envp);
+	perror("pipex");
+	strtab_free(argv);
+	free(path);
+	exit(EXIT_FAILURE);
 }

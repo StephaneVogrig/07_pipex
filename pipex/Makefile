@@ -6,7 +6,7 @@
 #    By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/03 19:41:13 by stephane          #+#    #+#              #
-#    Updated: 2024/03/21 01:33:44 by svogrig          ###   ########.fr        #
+#    Updated: 2024/03/26 20:38:38 by svogrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ DIR_SRC		:=	src
 SRC			:=	main.c \
 				cmd_path.c \
 				cmd_to_argv.c \
-				error.c \
+				exit.c \
 				redirection.c \
 				str.c \
 				token.c
@@ -38,6 +38,7 @@ SRC_BONUS	:=	bonus/main_bonus.c \
 				bonus/process_bonus.c \
 				cmd_path.c \
 				cmd_to_argv.c \
+				exit.c \
 				redirection.c \
 				str.c \
 				token.c
@@ -158,6 +159,7 @@ $(NAME): $(OBJ) $(LIB_FT)
 
 $(NAME_BONUS): $(OBJ_BONUS) $(LIB_FT)
 	@$(CC) $(CC_FLAGS) $(OBJ_BONUS) $(L_FLAG) $(l_FLAG) -o $(NAME_BONUS)
+	mv $(NAME_BONUS) $(NAME)
 	$(info created : $(NAME_BONUS))
 
 $(NAME_DEBUG): $(OBJ_DEBUG) $(LIB_MLX) $(LIB_FT)

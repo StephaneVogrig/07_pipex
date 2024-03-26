@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 04:48:37 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/20 04:58:09 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/26 21:33:04 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define CMD_PATH_H
 
 # include "libft.h"
-# include "str.h"
 # include "redirection.h"
 # include "str.h"
 # include "token.h"

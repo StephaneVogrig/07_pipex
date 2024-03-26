@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 00:05:06 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/21 07:52:21 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/25 17:09:28 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "vs_type.h"
 # include "float.h"
 
-# define BUFFER_SIZE 2048
+# define BUFFER_SIZE 4096
 # define LEN_MAXLONGLONG 20
 # define MAX_DIGIT_HEXA 16
 # define LEN_NIL 5
