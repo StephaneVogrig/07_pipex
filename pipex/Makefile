@@ -6,7 +6,7 @@
 #    By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/03 19:41:13 by stephane          #+#    #+#              #
-#    Updated: 2024/03/27 13:46:33 by svogrig          ###   ########.fr        #
+#    Updated: 2024/03/27 19:32:08 by svogrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -116,11 +116,12 @@ bonus:
 
 rebonus: fclean bonus
 
-run: all
+run:
+	@$(MAKE) -j makeall
 	@- ./$(NAME) $(RUNARGS)
 
 runbonus: bonus
-	@- ./$(NAME_BONUS) $(RUNARGS)
+	@- ./$(NAME) $(RUNARGS)
 
 debug:
 	@$(MAKE) -j makedebug
