@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 20:21:26 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/26 22:07:22 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/27 17:20:05 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "pipex_const.h"
 # include "cmd_to_argv.h"
 # include "exit.h"
+# include "exec_cmd.h"
 
 # define ERROR_USE_BONUS "\
 usage: \n\
@@ -40,6 +41,7 @@ t_list	*get_heredoc(char *limiter);
 /* process bonus -------------------------------------------------------------*/
 
 int		process_infile(char **cmd, int *pipe_out, char **envp, int *pids);
+int		process_heredoc(char *limiter, int *pipe_out, int *pids);
 int		process_infile_hd(char **cmd, int *pipe_fd, char **envp, int *pids);
 int		process_pipes(char **cmd, int *fd_in, char **envp, int *pids);
 int		process_outfile(char **cmd, int *fd_in, char **envp, int *pids);

@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:09:17 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/26 18:33:46 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/27 14:27:52 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,6 @@ void	heredoc_write(t_list *heredoc, int fd)
 		ft_putstr_fd(heredoc->content, fd);
 		heredoc = heredoc->next;
 	}
-}
-
-t_bool	add_to_heredoc(char *line, t_list **heredoc)
-{
-	t_list	*new_node;
-
-	new_node = ft_lstnew(line);
-	if (!new_node)
-	{
-		ft_lstclear(heredoc, *free);
-		return (FAILURE);
-	}
-	ft_lstadd_back(heredoc, new_node);
-	return (SUCCESS);
 }
 
 t_list	*get_heredoc(char *limiter)
@@ -50,7 +36,7 @@ t_list	*get_heredoc(char *limiter)
 	{
 		if (ft_strncmp(line, limiter, len_lim) == 0 && line[len_lim] == '\n')
 			break ;
-		if (!add_to_heredoc(line, &heredoc))
+		if (!add_to_strlist(&heredoc, line))
 			break ;
 		line = get_next_line(STDIN_FD);
 		if (!line)

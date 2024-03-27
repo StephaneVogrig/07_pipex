@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:00:10 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/26 22:17:35 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/27 15:49:08 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "libft.h"
 # include "pipex_const.h"
 
-void	exit_on_cmd_not_found(char *cmd, t_bool to_be_free);
+void	exit_on_cmd_not_found(char **argv);
 void	exit_on_open_error(char *file_path, int fd);
 void	exit_perror(char *msg);
 

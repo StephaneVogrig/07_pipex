@@ -6,7 +6,7 @@
 #    By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/03 19:41:13 by stephane          #+#    #+#              #
-#    Updated: 2024/03/26 20:38:38 by svogrig          ###   ########.fr        #
+#    Updated: 2024/03/27 13:46:33 by svogrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,10 @@ DIR_SRC		:=	src
 SRC			:=	main.c \
 				cmd_path.c \
 				cmd_to_argv.c \
+				exec_cmd.c \
 				exit.c \
 				redirection.c \
-				str.c \
-				token.c
+				str.c 
 
 SRC			:=	$(SRC:%=$(DIR_SRC)/%)
 
@@ -38,10 +38,10 @@ SRC_BONUS	:=	bonus/main_bonus.c \
 				bonus/process_bonus.c \
 				cmd_path.c \
 				cmd_to_argv.c \
+				exec_cmd.c \
 				exit.c \
 				redirection.c \
-				str.c \
-				token.c
+				str.c
 
 SRC_BONUS	:=	$(SRC_BONUS:%=$(DIR_SRC)/%)
 

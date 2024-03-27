@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 20:02:16 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/26 23:33:18 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/27 01:33:42 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,16 @@ int	process_infile(char **cmd, int *pipe_out, char **envp, int *pids)
 	}
 	if (pid == -1)
 		exit_pipex("pipex: process_infile: pipe", pids, pipe_out);
+	close(pipe_out[WRITE]);
 	return (pid);
 }
 
-int	process_heredoc(char **cmd, int *pipe_out, int *pids)
+int	process_heredoc(char *limiter, int *pipe_out, int *pids)
 {
 	t_list	*heredoc;
 	int		pid;
 
-	heredoc = get_heredoc(*(cmd - 1));
+	heredoc = get_heredoc(limiter);
 	if (!heredoc)
 		exit_pipex("pipex: process_heredoc: get_heredoc", pids, pipe_out);
 	pid = fork();
@@ -56,35 +57,6 @@ int	process_heredoc(char **cmd, int *pipe_out, int *pids)
 	if (pid == -1)
 		exit_pipex("pipex: process_heredoc: fork", pids, pipe_out);
 	close(pipe_out[WRITE]);
-	return (pid);
-}
-
-int	process_infile_hd(char **cmd, int *pipe_out, char **envp, int *pids)
-{
-	t_list	*heredoc;
-	int		pid;
-	int		pipe_in[2];
-
-	if (pipe(pipe_in) == -1)
-		exit_pipex("pipex: process_pipes: pipe", pids, pipe_out);
-	heredoc = get_heredoc(*(cmd - 1));
-	if (!heredoc)
-		exit_pipex("pipex: process_heredoc: get_heredoc", pids, pipe_out);
-	pid = fork();
-	if (pid == 0)
-	{
-		free(pids);
-		ft_lstclear(&heredoc, *free);
-		close(pipe_in[WRITE]);
-		close(pipe_out[READ]);
-		exec_cmd(pipe_in[READ], pipe_out[WRITE], *cmd, envp);
-	}
-	ft_lstclear(&heredoc, *free);
-	if (pid == -1)
-		exit_pipex("pipex: process_heredoc: fork", pids, pipe_out);
-	close(pipe_in[READ]);
-	heredoc_write(heredoc, pipe_in[WRITE]);
-	close(pipe_in[WRITE]);
 	return (pid);
 }
 
@@ -151,6 +123,6 @@ int	process_outfile_hd(char **cmd, int *fd_in, char **envp, int *pids)
 		exec_cmd(*fd_in, fd_out, *cmd, envp);
 	}
 	if (pid == -1)
-		perror("pipex: process_outfile: fork");
+		perror("pipex: process_outfile_hd: fork");
 	return (pid);
 }

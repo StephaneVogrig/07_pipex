@@ -6,17 +6,16 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 19:56:00 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/26 23:32:59 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/27 15:42:54 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exit.h"
 
-void	exit_on_cmd_not_found(char *cmd, t_bool to_be_free)
+void	exit_on_cmd_not_found(char **argv)
 {
-	fd_printf(STDERR_FD, "%s: command not found\n", cmd);
-	if (to_be_free)
-		free(cmd);
+	fd_printf(STDERR_FD, "%s: command not found\n", *argv);
+	strtab_free(argv);
 	exit(127);
 }
 

@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 03:52:08 by svogrig           #+#    #+#             */
-/*   Updated: 2024/03/26 17:22:49 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/27 17:33:11 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ char	**tokenlist_to_argv(t_list *strlist)
 	if (!strlist)
 		return (NULL);
 	nbr_elem = ft_lstsize(strlist);
-	strtab = malloc(sizeof(strtab) * (nbr_elem + 1));
-	if (!strtab)
+	argv = malloc(sizeof(argv) * (nbr_elem + 1));
+	if (!argv)
 	{
-		perror("pipex: strlist_to_strtab");
+		perror("pipex: tokenlist_to_argv");
 		return (NULL);
 	}
-	argv = strtab;
+	strtab = argv;
 	while (nbr_elem--)
 	{
 		*strtab++ = strlist->content;
@@ -40,74 +40,85 @@ char	**tokenlist_to_argv(t_list *strlist)
 	return (argv);
 }
 
-t_bool	add_to_tokenlist(t_list **tokenlist, char *token)
+char	*str_to_token(char *str, char *token)
 {
-	t_list	*new_node;
+	char	quote;
 
-	new_node = ft_lstnew(token);
-	if (!new_node)
+	while (*str && *str != ' ')
 	{
-		perror("pipex: add_to_tokenlist");
-		return (FAILURE);
+		if (*str == '\'' || *str == '\"')
+		{
+			quote = *str++;
+			while (*str && *str != quote)
+				*token++ = *str++;
+			if (*str)
+				str++;
+			continue ;
+		}
+		*token++ = *str++;
 	}
-	ft_lstadd_back(tokenlist, new_node);
-	return (SUCCESS);
+	*token = '\0';
+	return (str);
 }
 
-t_bool	str_to_tokenlist(char *str, t_list **tokenlist)
+int	len_next_token(char *str)
 {
-	t_bool	ok;
+	int		size;
+	char	quote;
+
+	size = 0;
+	while (*str && *str != ' ')
+	{
+		if (*str == '\'' || *str == '\"')
+		{
+			quote = *str++;
+			while (*str && *str++ != quote)
+				size++;
+			if (*str)
+				str++;
+			continue ;
+		}
+		str++;
+		size++;
+	}
+	return (size);
+}
+
+char	*add_next_token(char *str, t_list **tokenlist)
+{
 	char	*token;
 
-	token = NULL;
-	while (*str)
+	token = malloc(len_next_token(str) + 1);
+	if (!token)
 	{
-		token = malloc_next_token(str);
-		ok = (token != NULL);
-		if (ok)
-		{
-			str = str_to_token(str, token);
-			ok = add_to_tokenlist(tokenlist, token);
-		}
-		if (!ok)
-			break ;
-		while (*str == ' ')
-			str++;
+		perror("pipex: add_next_token");
+		ft_lstclear(tokenlist, &free);
+		return (NULL);
 	}
-	if (ok)
-		return (SUCCESS);
-	ft_lstclear(tokenlist, &free);
-	return (FAILURE);
+	str = str_to_token(str, token);
+	if (!add_to_strlist(tokenlist, token))
+		return (NULL);
+	return (str);
 }
 
 char	**cmd_to_argv(char *str)
 {
 	t_list	*tokenlist;
-
-	tokenlist = NULL;
-	if (str_to_tokenlist(str, &tokenlist) == FAILURE)
-		return (NULL);
-	return (tokenlist_to_argv(tokenlist));
-}
-
-void	exec_cmd(int fd_in, int fd_out, char *cmd, char **envp)
-{
-	char	*path;
 	char	**argv;
 
-	dup2(fd_in, STDIN_FD);
-	close(fd_in);
-	dup2(fd_out, STDOUT_FD);
-	close(fd_out);
-	while (*cmd == ' ')
-		cmd++;
-	path = cmd_path(cmd, envp);
-	argv = cmd_to_argv(cmd);
+	if (*str == '\0')
+		return (argv_empty());
+	tokenlist = NULL;
+	while (*str)
+	{
+		str = add_next_token(str, &tokenlist);
+		if (!str)
+			return (NULL);
+		while (*str == ' ')
+			str++;
+	}
+	argv = tokenlist_to_argv(tokenlist);
 	if (!argv)
-		exit(EXIT_FAILURE);
-	execve(path, argv, envp);
-	perror("pipex");
-	strtab_free(argv);
-	free(path);
-	exit(EXIT_FAILURE);
+		ft_lstclear(&tokenlist, &free);
+	return (argv);
 }
