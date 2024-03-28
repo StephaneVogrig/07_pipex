@@ -6,7 +6,7 @@
 #    By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/03 19:41:13 by stephane          #+#    #+#              #
-#    Updated: 2024/03/27 19:32:08 by svogrig          ###   ########.fr        #
+#    Updated: 2024/03/28 01:30:38 by svogrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,9 +78,8 @@ DEPS		:=	$(OBJ:.o=.d) $(OBJ_SAN:.o=.d) $(OBJ_BONUS:.o=.d)
 CC			:=	cc
 CC_FLAGS	:=	-Wall -Wextra -Werror
 
-DEBUG_FLAGS	:=	-g
 VAL_FLAGS	:=	--leak-check=full --track-origins=yes --track-fds=yes
-VAL_FLAGS	:=	$(VAL_FLAGS) --show-leak-kinds=all
+VAL_FLAGS_C	:=	 --show-leak-kinds=all --trace-children=yes
 
 SAN_FLAGS	:=	-fsanitize=address -g
 
@@ -90,7 +89,7 @@ MAKEFLAGS	+=	--no-print-directory
 
 # run -------------------------------------------------------------------------#
 
-RUNARGS		:=	in cat ls out
+RUNARGS		:=	Makefile cat cat out
 
 #------------------------------------------------------------------------------#
 # rules                                                                        #
@@ -116,36 +115,31 @@ bonus:
 
 rebonus: fclean bonus
 
-run:
-	@$(MAKE) -j makeall
-	@- ./$(NAME) $(RUNARGS)
+run: all
+	- ./$(NAME) $(RUNARGS)
 
 runbonus: bonus
-	@- ./$(NAME) $(RUNARGS)
+	- ./$(NAME_BONUS) Makefile cat wc cat out
 
 debug:
 	@$(MAKE) -j makedebug
 
 debugbonus:
-	@$(MAKE) -j makedebug
+	@$(MAKE) -j makedebugb
 
 valgrind: debug
-	@- valgrind --trace-children=yes $(VAL_FLAGS) ./$(NAME_DEBUG) $(RUNARGS)
+	- valgrind $(VAL_FLAGS) $(VAL_FLAGS_C) ./$(NAME_DEBUG) $(RUNARGS)
 
 valgrind_p: debug
-	@- valgrind --child-silent-after-fork=yes $(VAL_FLAGS) ./$(NAME_DEBUG) $(RUNARGS)
+	- valgrind $(VAL_FLAGS) ./$(NAME_DEBUG) $(RUNARGS)
 
 sanitize:
 	@$(MAKE) -j makesanitize
-	@- ./$(NAME_SAN) $(RUNARGS)
+	- ./$(NAME_SAN) $(RUNARGS)
 
 sanitizebonus:
 	@$(MAKE) -j makesanitizeb
-	@- ./$(NAME_SANB) $(RUNARGS)
-
-gprof:
-	@$(CC) $(OBJ) $(L_FLAG) $(L_FLAG) $(l_FLAG) -pg -o $(NAME)
-	@- ./$(NAME) $(RUNARGS)
+	- ./$(NAME_SANB) $(RUNARGS)
 
 makeall:		$(NAME)
 makebonus:		$(NAME_BONUS)
@@ -154,34 +148,39 @@ makedebugb:		$(NAME_DEBUGB)
 makesanitize:	$(NAME_SAN)
 makesanitizeb:	$(NAME_SANB)
 
-$(NAME): $(OBJ) $(LIB_FT)
+$(NAME): $(OBJ)
+	@$(MAKE) -j -C libft
 	@$(CC) $(CC_FLAGS) $(OBJ) $(L_FLAG) $(l_FLAG) -o $(NAME)
 	$(info created : $(NAME))
 
-$(NAME_BONUS): $(OBJ_BONUS) $(LIB_FT)
+$(NAME_BONUS): $(OBJ_BONUS)
+	@$(MAKE) -j -C libft
 	@$(CC) $(CC_FLAGS) $(OBJ_BONUS) $(L_FLAG) $(l_FLAG) -o $(NAME_BONUS)
-	mv $(NAME_BONUS) $(NAME)
 	$(info created : $(NAME_BONUS))
 
-$(NAME_DEBUG): $(OBJ_DEBUG) $(LIB_MLX) $(LIB_FT)
+$(NAME_DEBUG): $(OBJ_DEBUG)
+	@$(MAKE) -j -C libft
 	@$(CC) $(CC_FLAGS) $(OBJ_DEBUG) $(L_FLAG) $(l_FLAG) -g -o $(NAME_DEBUG)
 	$(info created : $(NAME_DEBUG))
 
-$(NAME_DEBUGB): $(OBJ_DEBUGB) $(LIB_MLX) $(LIB_FT)
+$(NAME_DEBUGB): $(OBJ_DEBUGB)
+	@$(MAKE) -j -C libft
 	@$(CC) $(CC_FLAGS) $(OBJ_DEBUGB) $(L_FLAG) $(l_FLAG) -g -o $(NAME_DEBUGB)
 	$(info created : $(NAME_DEBUGB))
 
-$(NAME_SAN): $(OBJ_SAN) $(LIB_MLX) $(LIB_FT)
+$(NAME_SAN): $(OBJ_SAN)
+	@$(MAKE) -j -C libft
 	@$(CC) $(OBJ_SAN) $(L_FLAG) $(l_FLAG) $(SAN_FLAGS) -o $(NAME_SAN)
 	$(info created : $(NAME_SAN))
 
-$(NAME_SANB): $(OBJ_SANB) $(LIB_MLX) $(LIB_FT)
+$(NAME_SANB): $(OBJ_SANB)
+	@$(MAKE) -j -C libft
 	@$(CC) $(OBJ_SANB) $(L_FLAG) $(l_FLAG) $(SAN_FLAGS) -o $(NAME_SANB)
 	$(info created : $(NAME_SANB))
 
 $(DIR_BUILD)/%.o: $(DIR_SRC)/%.c
 	@mkdir -p $(@D)
-	@$(CC) $(CC_FLAGS) $(I_FLAG) -pg -c $< -o $@
+	@$(CC) $(CC_FLAGS) $(I_FLAG) -c $< -o $@
 	$(info created : $@)
 
 $(DIR_BUILD)/debug/%.o: $(DIR_SRC)/%.c
@@ -199,14 +198,30 @@ $(DIR_BUILD)/sanitize/%.o: $(DIR_SRC)/%.c
 	@$(CC) $(CC_FLAGS) $(I_FLAG) $(SAN_FLAGS) -c $< -o $@
 	$(info created : $@)
 
-$(LIB_FT):
-	@$(MAKE) -j -C libft
-
 -include $(DEPS)
 
 #------------------------------------------------------------------------------#
 # specifications                                                               #
 #------------------------------------------------------------------------------#
 
-.PHONY: all clean fclean re run mlx
-#.SILENT:
+.PHONY: all \
+		clean \
+		fclean \
+		bonus \
+		re \
+		rebonus \
+		run \
+		runbonus \
+		debug \
+		debugbonus \
+		valgrind \
+		valgrind_p \
+		sanitize \
+		sanitizebonus \
+		gprof \
+		makeall \
+		makebonus \
+		makedebug \
+		makedebugb \
+		makesanitize \
+		makesanitizeb
