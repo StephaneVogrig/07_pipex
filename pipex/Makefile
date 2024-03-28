@@ -6,7 +6,7 @@
 #    By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/03 19:41:13 by stephane          #+#    #+#              #
-#    Updated: 2024/03/28 01:30:38 by svogrig          ###   ########.fr        #
+#    Updated: 2024/03/28 22:50:45 by svogrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,7 @@ CC			:=	cc
 CC_FLAGS	:=	-Wall -Wextra -Werror
 
 VAL_FLAGS	:=	--leak-check=full --track-origins=yes --track-fds=yes
-VAL_FLAGS_C	:=	 --show-leak-kinds=all --trace-children=yes
+VAL_FLAGS_C	:=	--show-leak-kinds=all --trace-children=yes
 
 SAN_FLAGS	:=	-fsanitize=address -g
 
