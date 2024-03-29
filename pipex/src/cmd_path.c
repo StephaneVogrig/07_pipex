@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:36:25 by stephane          #+#    #+#             */
-/*   Updated: 2024/03/28 22:47:05 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/03/29 01:38:57 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*path_find(char	*paths, char *buf, char **argv, int len)
 	return (NULL);
 }
 
-char	*find_paths(char **envp)
+char	*get_paths(char **envp)
 {
 	if (envp == NULL)
 		return (NULL);
@@ -84,7 +84,7 @@ char	*cmd_path(char **argv, char **envp)
 	if (**argv == '\0')
 		exit_on_cmd_not_found(argv);
 	len_cmd = ft_strlen(*argv);
-	paths = find_paths(envp);
+	paths = get_paths(envp);
 	if (!paths || ft_strchr(*argv, '/'))
 	{
 		if (access(*argv, F_OK) != 0)
