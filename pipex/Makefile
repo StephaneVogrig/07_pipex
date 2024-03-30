@@ -6,7 +6,7 @@
 #    By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/03 19:41:13 by stephane          #+#    #+#              #
-#    Updated: 2024/03/28 22:50:45 by svogrig          ###   ########.fr        #
+#    Updated: 2024/03/30 01:54:55 by svogrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,7 +105,12 @@ clean:
 fclean:
 	@$(MAKE) -C libft fclean
 	@rm -rf $(DIR_BUILD)
-	@rm -f $(NAME) $(NAME_BONUS) $(NAME)_sanitized gmon.out 
+	@rm -f	$(NAME) \
+			$(NAME_BONUS) \
+			$(NAME_DEBUG) \
+			$(NAME_DEBUGB) \
+			$(NAME_SAN)  \
+			$(NAME_SANB)
 
 re: fclean
 	@$(MAKE) -j makeall
