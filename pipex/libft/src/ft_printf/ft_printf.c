@@ -6,7 +6,7 @@
 /*   By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:00:52 by svogrig           #+#    #+#             */
-/*   Updated: 2024/01/12 18:05:47 by svogrig          ###   ########.fr       */
+/*   Updated: 2024/04/02 04:34:54 by svogrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	ft_printf(const char *format, ...)
 	spec_errors = 0;
 	buffer.offset = 0;
 	buffer.writed = 0;
+	buffer.save = NULL;
 	va_start(args, format);
 	while (format && *format)
 	{
