@@ -6,7 +6,7 @@
 #    By: svogrig <svogrig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 19:18:29 by svogrig           #+#    #+#              #
-#    Updated: 2024/03/29 23:48:21 by svogrig          ###   ########.fr        #
+#    Updated: 2024/05/06 01:43:31 by svogrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,7 @@ printf "\n$YELLOW                                   Mandatory\n"
 printf "\n$YELLOW$l1$RESET\n"
 # -----------------------------------------------------------------------------------------------
 printf "${PURPLE}\nTest 01${RESET}"
-printf "${WHITE} < infile cat | cat outfile                                                ${RESET}"
+printf "${WHITE} < infile cat | cat > outfile                                                ${RESET}"
 ./pipex infile cat cat out_pipex
 EXITCODE_PIPEX=$?
 < infile cat | cat > out_bash
